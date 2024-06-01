@@ -3,15 +3,11 @@
     [
         {
             "name": "build",
-            "shell_cmd": "cd ${project_path}/build && cmake -G Ninja -DCMAKE_BUILD_TYPE=MinSizeRel .. && ninja",
+            "shell_cmd": "cd ${project_path}/build && cmake -G Ninja -DCMAKE_BUILD_TYPE=MinSizeRel .. --fresh && ninja",
             "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
             "working_dir": "${file_path}",
             "variants":
             [
-                {
-                    "name": "fresh",
-                    "shell_cmd": "cd ${project_path}/build && cmake -G Ninja .. --fresh"
-                },
                 {
                     "name": "BUILD_STATIC=ON",
                     "shell_cmd": "cd ${project_path}/build && cmake -DBUILD_STATIC=ON .."
@@ -31,6 +27,14 @@
                 {
                     "name": "BUILD_PRO=OFF",
                     "shell_cmd": "cd ${project_path}/build && cmake -DBUILD_PRO=OFF .."
+                },
+                {
+                    "name": "BUILD_PLAYER=ON",
+                    "shell_cmd": "cd ${project_path}/build && cmake -DBUILD_PLAYER=ON .."
+                },
+                {
+                    "name": "BUILD_PLAYER=OFF",
+                    "shell_cmd": "cd ${project_path}/build && cmake -DBUILD_PLAYER=OFF .."
                 },
                 {
                     "name": "make",

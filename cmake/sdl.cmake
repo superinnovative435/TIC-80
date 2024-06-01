@@ -22,29 +22,29 @@ endif()
 
 if(BUILD_SDL AND BUILD_PLAYER AND NOT RPI)
 
-    add_executable(player-sdl WIN32 ${CMAKE_SOURCE_DIR}/src/system/sdl/player.c)
+    add_executable(player WIN32 ${CMAKE_SOURCE_DIR}/src/system/sdl/player.c)
 
     if (FREEBSD)
-        target_include_directories(player-sdl PRIVATE ${SYSROOT_PATH}/usr/local/include)
-        target_link_directories(player-sdl PRIVATE ${SYSROOT_PATH}/usr/local/lib)
+        target_include_directories(player PRIVATE ${SYSROOT_PATH}/usr/local/include)
+        target_link_directories(player PRIVATE ${SYSROOT_PATH}/usr/local/lib)
     endif()
 
-    target_include_directories(player-sdl PRIVATE
+    target_include_directories(player PRIVATE
         ${THIRDPARTY_DIR}/sdl2/include
         ${CMAKE_SOURCE_DIR}/include
         ${CMAKE_SOURCE_DIR}/src)
 
     if(MINGW)
-        target_link_libraries(player-sdl PRIVATE mingw32)
-        target_link_options(player-sdl PRIVATE -static)
+        target_link_libraries(player PRIVATE mingw32)
+        target_link_options(player PRIVATE -static)
     endif()
 
-    target_link_libraries(player-sdl PRIVATE tic80core SDL2main)
+    target_link_libraries(player PRIVATE tic80core SDL2main)
 
     if(BUILD_STATIC)
-        target_link_libraries(player-sdl PRIVATE SDL2-static)
+        target_link_libraries(player PRIVATE SDL2-static)
     else()
-        target_link_libraries(player-sdl PRIVATE SDL2)
+        target_link_libraries(player PRIVATE SDL2)
     endif()
 endif()
 

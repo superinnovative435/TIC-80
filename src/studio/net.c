@@ -400,18 +400,17 @@ struct tic_net
 };
 
 #if defined(__ANDROID__)
-#include <jni.h>
-JNIEnv *Android_JNI_GetEnv();
+#include <android/native_activity.h>
+const void* sapp_android_get_native_activity(void);
 #endif
 
 tic_net* tic_net_create(const char* host)
 {
 #if defined(__ANDROID__)
-    JNIEnv *env = Android_JNI_GetEnv();
-    JavaVM *vm = NULL;
-    (*env)->GetJavaVM(env, &vm);
 
-    naettInit(vm);
+    const ANativeActivity *act = sapp_android_get_native_activity();
+    naettInit(act->vm);
+
 #else
     naettInit(NULL);
 #endif

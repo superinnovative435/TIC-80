@@ -22,15 +22,4 @@
 
 #define SOKOL_IMPL
 
-#if defined(WIN32)
-
-#ifndef WM_MOUSEHWHEEL
-#define WM_MOUSEHWHEEL 0x020E
-#endif
-
-#endif
-
-#include "sokol_app.h"
-#include "sokol_gfx.h"
-#include "sokol_time.h"
-#include "sokol_audio.h"
+#include "sokol.h"

@@ -69,7 +69,7 @@ TIC80_API void tic80_load(tic80* tic, void* cart, s32 size)
     tic_cart_load(&mem->cart, cart, size);
 
     const tic_script* script = tic_get_script(mem);
-    if(script)
+    if(script->name)
     {
         tic_api_reset(mem);
     }

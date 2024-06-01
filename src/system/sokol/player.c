@@ -53,7 +53,7 @@ static void app_init(void)
         }
     }
 
-    sokol_gfx_init(TIC80_FULLWIDTH, TIC80_FULLHEIGHT, 1, 1, false, false);
+    // sokol_gfx_init(TIC80_FULLWIDTH, TIC80_FULLHEIGHT, 1, 1, false, false);
 
     stm_setup();
 }
@@ -68,7 +68,7 @@ static void app_frame(void)
         tic80_sound(tic);        
     }
 
-    sokol_gfx_draw(tic->screen);
+    // sokol_gfx_draw(tic->screen);
 
     static float floatSamples[TIC80_SAMPLERATE * TIC80_SAMPLE_CHANNELS / TIC80_FRAMERATE];
 
