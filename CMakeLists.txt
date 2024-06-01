@@ -43,8 +43,17 @@ endif()
 if (BUILD_NO_OPTIMIZATION)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0")
-elseif(NOT EMSCRIPTEN AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(LINKER_FLAGS_MINSIZEREL "-Wl,-dead_strip")
+else()
+
+    if(APPLE)
+        set(LINKER_FLAGS_MINSIZEREL "-Wl,-dead_strip")
+    else()
+        set(FLAGS_MINSIZEREL "-fno-function-sections -fno-data-sections")
+        set(LINKER_FLAGS_MINSIZEREL "-Wl,-s -Wl,-Bsymbolic -Wl,--gc-sections")
+    endif()
+
+    set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} ${FLAGS_MINSIZEREL}")
+    set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} ${FLAGS_MINSIZEREL}")
     set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} ${LINKER_FLAGS_MINSIZEREL}")
     set(CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL "${CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL} ${LINKER_FLAGS_MINSIZEREL}")
 endif()
@@ -98,9 +107,16 @@ if(MSVC)
         set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/lib )
         set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/bin )
 
-    endforeach()
+        # use static runtime
+        # !TODO: use set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") from cmake 3.15 instead
+        if(CMAKE_C_FLAGS_${OUTPUTCONFIG} MATCHES "/MD")
+            string(REGEX REPLACE "/MD" "/MT" CMAKE_C_FLAGS_${OUTPUTCONFIG} "${CMAKE_C_FLAGS_${OUTPUTCONFIG}}")
+        endif()
 
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+        if(CMAKE_CXX_FLAGS_${OUTPUTCONFIG} MATCHES "/MD")
+            string(REGEX REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_${OUTPUTCONFIG} "${CMAKE_CXX_FLAGS_${OUTPUTCONFIG}}")
+        endif()        
+    endforeach()
 else()
 
     set(CMAKE_C_STANDARD 11)
