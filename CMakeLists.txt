@@ -47,7 +47,7 @@ else()
 
     if(APPLE)
         set(LINKER_FLAGS_MINSIZEREL "-Wl,-dead_strip")
-    else()
+    elseif(NOT N3DS)
         set(FLAGS_MINSIZEREL "-fno-function-sections -fno-data-sections")
         set(LINKER_FLAGS_MINSIZEREL "-Wl,-s -Wl,-Bsymbolic -Wl,--gc-sections")
     endif()
