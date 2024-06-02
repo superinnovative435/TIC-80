@@ -30,12 +30,6 @@ option(BUILD_ASAN_DEBUG "Build with AddressSanitizer" OFF)
 option(BUILD_WITH_ZLIB "Build with zlib linked" ON)
 option(TIC80_TARGET "Target binary suffix")
 
-if(WIN32 OR EMSCRIPTEN OR ANDROID OR APPLE)
-    if(NOT BUILD_SDL AND NOT BUILD_SOKOL)
-        set(BUILD_SOKOL ON)
-    endif()
-endif()
-
 if(NOT TIC80_TARGET)
     set(TIC80_TARGET tic80)
 endif()
