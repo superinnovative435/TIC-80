@@ -3,7 +3,7 @@
 "CODE_THEME":
 {
   "BG": 15,
-  "FG": 12,
+  "FG": 15,
   "STRING": 4,
   "NUMBER": 11,
   "KEYWORD": 3,
